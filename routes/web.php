@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [\App\Http\Controllers\TripController::class,'index'])->name('trips.index');
 Route::post('/', [\App\Http\Controllers\TripController::class,'getTrips'])->name('trips.get');
+
+Route::get('/tickets', [\App\Http\Controllers\TicketsController::class,'index'])->name('ticket.index');
+
+Route::get('/clear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+
+    return "Кэш очищен.";
+});
